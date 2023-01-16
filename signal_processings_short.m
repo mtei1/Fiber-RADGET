@@ -8,8 +8,7 @@ sampleDir = 'Sample\Abiotic\';
 expName = 'FGB30_12e-1';
 expDate = '2022-07-27_1';
 fiberName = 'FS02021LUNA010924';
-filename = [expName,'_',expDate,'.csv'];
-M = readmatrix([sampleDir,filename]);
+load([sampleDir,expName,'_',expDate]);
 % Load FOS information
 fiberDir = 'Sample\FiberInfo\';
 load([fiberDir,fiberName,'_650um.mat']); % FOS index<->position
@@ -19,11 +18,10 @@ load([fiberDir,fiberName,'_650um_gages'])
 S = min(gages);
 E = max(gages);
 L = E-S+1;
-sensorRanges = gages-min(gages)+1;
+pos = pos(S:E);
 
 %% Process strain data
-et = floor(length(M(:,1))/hertz);
-M = M(1:et*hertz,S:E)/10; % csv file is misisng decimal
+et = length(M(:,1))/hertz;
 mM = reshape(M',[L,hertz,et]);
 mM = reshape(mean(mM,2),L,et)';
 cutOff = 1000; % > 1e-3 deformations are likely errors
@@ -44,7 +42,7 @@ clear C mM mMhat rmMhat
 % Original
 iTime = 1:et*hertz;
 figure('Name','Heatmap of original','Position',[0 0 800 600]);
-imagesc(iTime*triggerI,pos(S:E),M');
+imagesc(iTime*triggerI,pos,M');
 colorbar
 axis tight; axis ij;
 title('Heatmap original')
@@ -54,7 +52,7 @@ clear iTime
 % Processed
 iTime = 1:et;
 figure('Name','Heatmap after signal processing','Position',[0 0 800 600]);
-imagesc(iTime,pos(S:E),pM');
+imagesc(iTime,pos,pM');
 colorbar
 axis tight; axis ij;
 title('Heatmap processed')
