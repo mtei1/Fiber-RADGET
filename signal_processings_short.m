@@ -11,7 +11,7 @@ fiberName = 'FS02021LUNA010924';
 filename = [expName,'_',expDate,'.csv'];
 M = readmatrix([sampleDir,filename]);
 % Load FOS information
-fiberDir = 'Sample\fiberInfo\';
+fiberDir = 'Sample\FiberInfo\';
 load([fiberDir,fiberName,'_650um.mat']); % FOS index<->position
 hertz = 20; % Hz, measurement frequency
 triggerI = 1/hertz; % sec, trigger interval
