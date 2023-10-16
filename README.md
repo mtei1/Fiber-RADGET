@@ -4,7 +4,7 @@ Fiber-RADGET is a distributed fiber optic sensor structured on a spiral film to 
 ## Sample data description
 - FiberInfo: each file contains ```gages``` an array of indices for gages of a distributed fiber optic sensor corresponding to the following positions in a Fiber-RADGET device
 <img src="./Sample/Figures/config.png" width=50% height=50%>
-- Abiotic: Real-time measurements of microstrains for every fiber optic sensor gage. The measurement was taken twice every second while a metal wire was penetrated at the center of a pot filled with glass beads or soil.\\
+- Abiotic: Real-time measurements of microstrains for every fiber optic sensor gage. The measurement was taken twice every second while a metal wire was penetrated at the center of a pot filled with glass beads or soil.<br />
 - Plants: Real-time measurements of microstrains for every fiber optic sensor gage. The measurement was taken twice every 2 minutes while a plant seed was sown at the center of a pot filled with soil at time 0.
 
 ## How to use
