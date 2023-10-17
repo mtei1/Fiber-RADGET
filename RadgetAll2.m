@@ -34,13 +34,18 @@ for i = 1:length(d)
         sM = mMall(:,S:E);
         [et,L] = size(sM);
     else
-        tmp = sM;
         et = size(mMall,1);
+        tmpS = sM;
         sM = nan(sum(ets)+et,L);
-        sM(1:sum(ets),:) = tmp;
+        sM(1:sum(ets),:) = tmpS;
         sM(sum(ets)+1:end,:) = mMall(:,S:E);
+        tmp2 = mMall;
+        mMall = nan(sum(ets)+et,size(mMall,2));
+        mMall(1:sum(ets),:) = tmp;
+        mMall(sum(ets)+1:end,:) = tmp2;
     end
     ets(i) = et;
+    tmp = mMall;
 end
 %Load CT data
 load([sampleFolder,'CT_',expName,expDate,fiberName])
