@@ -10,15 +10,15 @@ expName = 'radish'; % plant species
 fiberName = 'FS02021LUNA063307';
 expDate = '2022-01-13'; % experiment dates
 trimI = 10*60; % trimmed interval in second
-gageI = 0.65; % FOS interval in mm
-Tc = 1.7e-4; % thermal expansion coefficient for PTFE
-Kt = 0.6800000071525574;
-Ke = 6.716787338256836;
 videoS = true;
 
 %% Fiber-RADGET dimensions
 load([configFolder,fiberName,'_650um_gages'])
 load([configFolder,'Fiber-RADGET_dim_',expName])
+Tc = 1.7e-4; % thermal expansion coefficient for PTFE
+Kt = 0.6800000071525574;
+Ke = 6.716787338256836;
+gageI = 0.65; % FOS interval in mm
 gages = gages(2:end);
 S = min(gages);
 E = max(gages);
@@ -52,7 +52,7 @@ load([sampleFolder,'CT_',expName,expDate,fiberName])
 
 %% Process strain data
 T = sum(ets);
-%Band-pass filter dimensions
+%Band-pass filter sizes
 deltaL = ceil(15/gageI); % positional threshold for low-pass filter in index
 deltaT = ceil(24*3600/trimI); % notch filter cutoff time period in index
 dw = 5; % window size for time cutoff frequency
@@ -88,10 +88,10 @@ for i = 1:length(Ls)
         currTh = MINFTH;
         swirl = 1;
     end
-    if i > 1
-        cumL = sum(Ls(1:i-1));
-    else
+    if i ==1
         cumL = 0;
+    else
+        cumL = sum(Ls(1:i-1));
     end
     for j = 1:Ls(i)
         sMvalid(:,cumL+j) = sMhat(:,tr(j));
@@ -151,7 +151,7 @@ if videoS
 else
     tps = finalFrame;
 end
-f3d = figure('Name',['3D plot of t =',num2str(finalFrame)],'Position',[0 0 600 600]);
+f3d = figure('Name','3D plot of FOS kinetics','Position',[0 0 600 600]);
 for i = 1:length(tps)
     currStrain = sMvalid(tps(i),:)';
     rootFOS = zeros(2*XS+1,2*XS+1); % reconstruction from FOS
